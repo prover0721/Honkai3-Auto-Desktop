@@ -1,0 +1,51 @@
+{
+    "id": "honkai3",
+    "name": "崩坏3",
+    "icon": "GAME",
+    "env": "PC 本地 (实测已验证：B服)",
+    "description": "PC端全自动管家 (免扫码极速登录 + 7大日常全自动闭环托管，当前实测已验证：B服)",
+    "tasks": [
+        {
+            "id": "auto_login",
+            "name": "免扫码登录",
+            "desc": "智能截取二维码并免密授权，自动点击进入游戏主界面",
+            "enabled": true
+        },
+        {
+            "id": "handle_popups",
+            "name": "自动签到与弹窗消除",
+            "desc": "自动消除月卡60水晶、7日登录、深渊结算与版本公告弹窗",
+            "enabled": true
+        },
+        {
+            "id": "dorm_errand",
+            "name": "家园打工与福利",
+            "desc": "一键收割家园金币与体能池，收取昨日打工奖励并委派今日女武神",
+            "enabled": true
+        },
+        {
+            "id": "expedition",
+            "name": "远征探索体力消耗",
+            "desc": "一键收取已产出女武神碎片，自动派遣远征消耗多余体力",
+            "enabled": true
+        },
+        {
+            "id": "daily_sweep",
+            "name": "材料活动一键减负",
+            "desc": "自动消耗减负券，秒级清空今日全部曜日材料关卡",
+            "enabled": true
+        },
+        {
+            "id": "missions",
+            "name": "每日使命600历练值宝箱与凭证",
+            "desc": "先领取已完成使命，再识别可领取的阶段宝箱与作战凭证奖励",
+            "enabled": true
+        },
+        {
+            "id": "auto_close",
+            "name": "日常完成后退出游戏",
+            "desc": "全部日常任务顺利执行完毕后，自动优雅退出游戏客户端释放资源",
+            "enabled": false
+        }
+    ]
+}

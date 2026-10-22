@@ -1,0 +1,61 @@
+# ==========================================
+# 隐私与敏感数据严格安全过滤 (严防泄露)
+# ==========================================
+games/honkai3/config.json
+**/config.json
+*.key
+*.token
+*.pem
+*.pfx
+
+# 游戏实机快照与排查日志
+diagnostics/
+**/diagnostics/
+*.log
+logs/
+*.txt.bak
+
+# 备份与私有数据包
+*.zip
+*.apk
+Backup/
+Archive/
+
+# ==========================================
+# Python 运行时与缓存
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ==========================================
+# 编辑器与系统文件
+# ==========================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db

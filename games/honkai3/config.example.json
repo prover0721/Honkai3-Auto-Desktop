@@ -1,0 +1,19 @@
+{
+    "game_path": "",
+    "account": "",
+    "password": "",
+    "uid": 0,
+    "access_key": "",
+    "uname": "",
+    "bh_ver": "9.1.0",
+    "oa_token": "",
+    "combo_token": "",
+    "open_id": "",
+    "auto_close_game": true,
+    "combo_id": "0",
+    "dispatch_cache": {},
+    "server_type": "Bilibili",
+    "server_name": "B服",
+    "channel_id": "14",
+    "account_type": "2"
+}

@@ -1,0 +1,165 @@
+# 崩坏3 全自动管家 (Honkai3 Auto Desktop)
+
+<p align="center">
+  <img src="assets/app_icon.ico" width="96" height="96" alt="Honkai3 Auto Logo">
+</p>
+
+<p align="center">
+  <b>现代化《崩坏3》PC端全自动托管桌面客户端</b><br>
+  <sub>免扫码极速登舰 · Alas 工业级视觉交互引擎 · 7 大日常任务全自动闭环托管 · 零侵入纯视觉仿真</sub>
+</p>
+
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License"></a>
+  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.10%2B-brightgreen.svg" alt="Python"></a>
+  <a href="https://github.com/zhiyiYo/PyQt-Fluent-Widgets"><img src="https://img.shields.io/badge/UI-Fluent%20Design-0078d4.svg" alt="Fluent UI"></a>
+  <a href="#"><img src="https://img.shields.io/badge/Platform-Windows%2010%2F11-blue.svg" alt="Platform"></a>
+  <a href="#"><img src="https://img.shields.io/badge/Server-Bilibili%20%E6%9C%8D%E5%AE%9E%E6%B5%8B-blue.svg" alt="Server"></a>
+</p>
+
+> [!IMPORTANT]
+> **适用服务器与实测范围说明**：
+> 本项目目前**仅在《崩坏3》B 站渠道服 (B服) 进行了完整的实机日常联调与长期运行验证**。
+> 官服及全厂商渠道服（vivo/oppo/华为/小米/应用宝等）在扫码与页面视觉流上大部分相通，但尚未开展完整真机日常回归，暂不保证 100% 稳定兼容。欢迎其他渠道服舰长共同测试并提交 Issue / PR！
+
+---
+
+## 🌟 核心特性
+
+- 🎨 **现代优雅的桌面体验**：基于 Windows 11 Fluent Design（云母材质、柔光微胶囊开关、平滑滚动、深浅色模式自适应）。
+- 📱 **纯手机扫码预授权（零滑块/零密码）**：
+  - 采用 B 站官方 TV/App OAuth 移动端专属授权协议；
+  - 初次运行无需繁琐输入账号与密码，无需拖动极验滑动拼图，手机 B 站 App 扫一扫并在手机上点击确认授权，秒级换取并持久化游戏专属凭证。
+- ⚡ **秒级无感免扫码自动登录**：
+  - 启动游戏后，毫秒级捕获游戏登录二维码，自动完成协议层签名并模拟点击「进入游戏」；
+  - **状态 0 前置自适应检测**：若游戏当前已处于舰桥或登录开门弹窗，自动检测跳过扫码流程，无缝进入就绪状态。
+- 🛡️ **对标 Alas 的工业级视觉引擎**：
+  - **全画幅自适应多尺度模板匹配**：支持任意 16:9 分辨率（720P / 1080P / 2K / 4K）自适应缩放；
+  - **动态弹窗与模态层拦截**：签到福利、月卡领取、活动公告、深渊结算等突发覆盖层优先闭环消化；
+  - **严格安全铁律**：绝不盲点未识别坐标，操作严格遵循「目标识别 -> 执行点击 -> 画面演变 -> 终态核验」的确定性验证。
+- 🎮 **全套 7 大日常任务一键托管**：
+  1. 🏠 **家园打工与福利**：自动收取产出金币、体能存储罐提取、昨日打工奖励收取与今日一键委派；
+  2. 🧭 **远征探索派遣**：昨日碎片远征奖励收取与今日一键远征派出（体力耗尽或已派发智能放行）；
+  3. 📦 **材料活动减负**：一键完成日常材料活动减负、金币与核心材料获取；
+  4. ⚔️ **记忆战场扫荡**：快速完成当期记忆战场已解锁层级一键扫荡；
+  5. 🚢 **舰团委托与保底**：每日 8 次舰团委派循环提交、委托奖励及累计贡献宝箱收取；
+  6. 📋 **每日使命与 150 活跃**：每日使命奖励逐项/一键领取、40/80/120/150 阶段活跃宝箱与 BP 经验提取；
+  7. ✉️ **系统邮件查收**：一键提取未领取的邮件道具与奖励。
+- ⏸️ **独创会话级动态暂停/继续 (F9)**：
+  - 支持在任务运行期间随时按 `F9` 或点击按钮挂起自动化，不锁死游戏，随时接管游戏操作，再次点击平滑恢复继续执行。
+
+---
+
+## 🚀 快速上手
+
+### 1. 运行环境要求
+- **操作系统**：Windows 10 / 11 (64-bit)
+- **Python 版本**：Python 3.10 及以上
+- **游戏客户端**：《崩坏3》桌面版（**当前实测已验证：B服**；官服及其他渠道服兼容推进中）
+- **画面设置**：推荐在游戏设置中采用 **16:9 分辨率**（如 1280×720、1920×1080 或 2560×1440），窗口化或无边框窗口均可。
+
+### 2. 克隆与安装依赖
+
+```bash
+# 1. 克隆本项目仓库
+git clone https://github.com/your-username/honkai3-auto-desktop.git
+cd honkai3-auto-desktop
+
+# 2. 安装依赖 (推荐使用 Python 虚拟环境)
+python -m venv .venv
+.venv\Scripts\activate
+
+# 3. 安装依赖包
+pip install -r requirements.txt
+```
+
+> **提示**：如果您安装了现代 Python 包管理器 [`uv`](https://github.com/astral-sh/uv)，可直接在根目录运行：
+> ```bash
+> uv sync
+> uv run python main.py
+> ```
+
+### 3. 启动桌面客户端
+
+双击目录下的 `run.bat` 或在终端运行：
+```bash
+python main.py
+```
+
+---
+
+## 📖 使用指引
+
+### 第一步：初次授权与凭据绑定
+1. 启动客户端后，在主界面点击 **【📸 手机扫码授权】** 按钮；
+2. 弹窗会自动生成官方专属授权二维码；
+3. 打开手机【哔哩哔哩 App】右上角「扫一扫」，扫描二维码并在手机端点击**确认授权**；
+4. 客户端将自动完成签名校验，并提示绑定成功（凭证加密保存在本地，之后运行完全无感）。
+
+### 第二步：勾选任务并执行
+1. 在任务列表中，按需勾选今天想要执行的日常任务（如：免扫码登录、家园福利、远征派遣、每日使命等）；
+2. 点击顶部 **【▶ 运行任务】** 按钮；
+3. 客户端将自动唤起/定位《崩坏3》游戏窗口，右侧控制台实时输出带色彩的高精度运行日志；
+4. 若需中途介入游戏，按 `F9` 键即可瞬间挂起脚本，操作完成后再次按 `F9` 即可继续。
+
+---
+
+## 🔒 隐私与安全性保障 (Privacy & Security)
+
+- **完全本地化运行**：本项目为 100% 客户端本地运行的纯 Python 自动化开源工具，除直接与游戏官方服务器（米哈游/Bilibili）建立登录验签外，**绝不上报任何账号、密码或设备信息到任何第三方服务器**。
+- **配置完全物理脱敏**：
+  - 项目根目录已配置严格的 `.gitignore` 规则，用户的本地凭证文件 `config.json` 永远不会被意外提交至代码仓库；
+  - 开源仓库中仅附带空白模板 `config.example.json`。
+- **纯视觉模拟安全原则**：
+  - 核心逻辑基于 Windows 前台视觉匹配与物理键鼠模拟，不侵入、不修改任何游戏内存或客户端二进制文件，符合健康挂机规范。
+
+---
+
+## 📂 项目结构说明
+
+```text
+Honkai3-Auto-Desktop/
+├── .gitignore               # 严格的隐私与安全文件过滤
+├── LICENSE                  # MIT 开源协议
+├── README.md                # 项目文档
+├── requirements.txt         # 核心第三方依赖
+├── pyproject.toml           # 现代包构建规范
+├── run.bat                  # 一键启动批处理
+├── main.py                  # 桌面端启动主入口
+├── ui/                      # Fluent UI 可视化界面
+│   ├── fluent_app.py        # 崩坏3专属主窗口与任务控制台
+│   ├── bili_login_dialog.py # 纯手机扫码与扫码器导入授权弹窗
+│   └── theme_manager.py     # 深浅色主题引擎
+├── core/                    # 调度框架与安全守卫
+│   ├── cli_runner.py        # 自动化执行子进程管线
+│   ├── plugin_manager.py    # 插件加载底座
+│   ├── runtime_guard.py     # 视觉证据与操作时效安全守卫
+│   └── window_utils.py      # Windows API 窗口句柄置顶穿透工具
+├── games/
+│   └── honkai3/             # 《崩坏3》核心自动化引擎
+│       ├── manifest.json    # 任务元数据清单
+│       ├── config.example.json # 干净配置模板
+│       ├── runner.py        # 任务流总调度器
+│       ├── mihoyo_api.py    # 米哈游官方 API 与 dispatch 调度
+│       ├── bili_sdk.py      # B 站 TV/App OAuth 移动端专属扫码协议
+│       ├── qr_scanner.py    # 游戏窗口定位与二维码秒识引擎
+│       ├── core/            # 页面状态机、视觉匹配、弹窗拦截与暂停锁
+│       ├── tasks/           # 7 大日常任务独立执行模块
+│       └── assets/          # 1280x720 视觉模板图片资源
+└── assets/                  # 客户端图标资源
+```
+
+---
+
+## 🤝 参与贡献与致谢
+
+- 感谢开源自动化框架 [Alas (AzurLaneAutoScript)](https://github.com/LmeSzinc/AzurLaneAutoScript) 提供的先进视觉状态机设计思想。
+- 感谢现代化 UI 框架 [PyQt-Fluent-Widgets](https://github.com/zhiyiYo/PyQt-Fluent-Widgets) 带来的精美 Fluent Design 视觉风格。
+- 欢迎提交 Issue 反馈游戏新版本 UI 变动或提交 Pull Request 贡献代码！
+
+---
+
+## ⚠️ 免责声明 (Disclaimer)
+
+- 本项目仅供 Python 自动化技术与计算机视觉学术交流学习使用，严禁用于任何商业牟利行为。
+- 本工具为纯视觉模拟交互辅助，不涉及任何外挂封包或内存修改行为。请合理安排游戏时间，遵守游戏用户协议。
