@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 任务模块：家园金币、体力提取与打工 (Task Dorm Bonus & Errands)
-参考 Alas 规范：收取家园累积金币与溢出体能，一键收取昨日打工奖励并委派今日最优女武神
+：收取家园累积金币与溢出体能，一键收取昨日打工奖励并委派今日最优女武神
 """
 import time
 from typing import Tuple, Callable

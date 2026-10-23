@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 任务模块：每日使命600历练值宝箱与作战凭证 (Task Daily Missions & BP)
-参考 Alas 规范：一键领取已达成的日常使命任务，依次领取阶段历练值宝箱（满额40水晶），并领取作战凭证升级奖励
+：一键领取已达成的日常使命任务，依次领取阶段历练值宝箱（满额40水晶），并领取作战凭证升级奖励
 """
 import time
 from typing import Tuple, Callable

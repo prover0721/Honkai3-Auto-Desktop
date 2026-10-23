@@ -1459,7 +1459,7 @@ class MainWindow(FluentWindow):
                         except Exception:
                             pass
 
-            # 4. 彻底清理 Alas 或崩坏3 可能残留的子进程
+            # 4. 彻底清理  或崩坏3 可能残留的子进程
             
 
         except Exception:

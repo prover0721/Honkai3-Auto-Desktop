@@ -1,7 +1,7 @@
 [project]
 name = "honkai3-auto-desktop"
 version = "1.0.0"
-description = "现代化《崩坏3》PC端全自动管家桌面客户端 (免扫码极速登录 + Alas标准日常全自动托管)"
+description = "现代化《崩坏3》PC端全自动管家桌面客户端 (免扫码极速登录 + 7大日常全自动闭环托管)"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }

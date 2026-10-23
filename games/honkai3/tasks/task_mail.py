@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 任务模块：邮件一键清理 (Task Mail Claim)
-参考 Alas 规范：自动进入邮件列表，一键收取系统补偿、活动赠礼与日常奖励邮件
+：自动进入邮件列表，一键收取系统补偿、活动赠礼与日常奖励邮件
 """
 import time
 from typing import Tuple, Callable

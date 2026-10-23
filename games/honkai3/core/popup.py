@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-崩坏3 全局动态弹窗拦截消解器 (Alas Popup Interceptor)
+崩坏3 全局动态弹窗拦截消解器 (Popup Interceptor)
 自动识别并消除每日签到、月卡、深渊结算、版本活动等各类打断弹窗
 """
 import time

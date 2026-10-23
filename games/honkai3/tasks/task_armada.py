@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 任务模块：舰团委托回收与奖池 (Task Armada Commission & Rewards)
-参考 Alas 规范：自动提交今日最多8次物资委托回收，放入奖励池，并收取舰团阶段奖励 (完美适配全新 UI)
+：自动提交今日最多8次物资委托回收，放入奖励池，并收取舰团阶段奖励 (完美适配全新 UI)
 """
 import time
 from typing import Tuple, Callable

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-崩坏3 分层页面状态机与图导航系统 (Alas Page Graph System)
+崩坏3 分层页面状态机与图导航系统 (Page Graph System)
 实现有向图最短路径搜索、自适应页面跳转与意外弹窗自愈
 """
 import time
@@ -223,7 +223,7 @@ PAGE_MATERIAL.link(PAGE_MAIN, TPL_HOME)
 
 class PageNavigator:
     """
-    Alas 图导航器：负责执行页面探测、广度优先寻路与状态保持
+    图导航器：负责执行页面探测、广度优先寻路与状态保持
     """
     def __init__(self, vision: UIVision):
         self.vision = vision
@@ -297,7 +297,7 @@ class PageNavigator:
         max_retries: int = 15,
     ) -> bool:
         """
-        Alas 核心寻路接口：由当前所处任意页面自动导航至目标页面
+         核心寻路接口：由当前所处任意页面自动导航至目标页面
         :param target_page: 目标 Page
         :param window_rect: 游戏窗口矩形
         :param capture_func: 获取当前帧图像的回调

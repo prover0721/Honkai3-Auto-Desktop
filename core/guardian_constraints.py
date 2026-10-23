@@ -1,4 +1,4 @@
-"""Task-scoped, rule-based Alas constraints; all recovery actions are bounded."""
+"""Task-scoped, rule-based constraints; all recovery actions are bounded."""
 from dataclasses import dataclass
 from types import MethodType
 import math
@@ -65,7 +65,7 @@ class CognitiveGuardian:
         def load_campaign(_runner, *args, **kwargs):
             name = args[0] if args else kwargs.get('name')
             folder = args[1] if len(args) > 1 else kwargs.get('folder', 'campaign_main')
-            # Native Alas caches by name only: multiple archives reuse a1/d1.
+            # Native cache by name only: multiple archives reuse a1/d1.
             if (getattr(_runner, 'name', None) == name
                     and getattr(_runner, 'folder', folder) != folder):
                 _runner.name = None

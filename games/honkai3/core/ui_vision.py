@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-崩坏3 Alas 视觉匹配与交互引擎 (UI Vision Engine)
+崩坏3 视觉匹配与交互引擎 (UI Vision Engine)
 提供多分辨率自适应模板匹配、局部 ROI 聚焦、RGB 颜色校验与精准键鼠模拟
 """
 import os
