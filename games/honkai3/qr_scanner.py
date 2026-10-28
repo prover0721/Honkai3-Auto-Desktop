@@ -506,17 +506,9 @@ def wait_and_click_enter_game(
     rect: Optional[Tuple[int, int, int, int]] = None,
     log_func=None,
     is_stopped_func=None,
-    delay_before_click: float = 1.5,
+    delay_before_click: float = 2.0,
 ) -> bool:
-    """扫码确认成功后，在鼠标当前位置模拟点击进入游戏。
-
-    逻辑：
-    1. 扫码授权确认成功后，等待约 1.5 秒让客户端完成弹窗关闭并进入「点击任意处进入」画面；
-    2. 获取用户当前鼠标光标所在绝对屏幕坐标；
-    3. 将游戏窗口置顶并激活；
-    4. 在鼠标当前坐标执行模拟左键点击（物理 + 消息双通道）；
-    5. 间隔 0.5 秒再次执行一次确认点击，确保穿透过渡动画或焦点切换。
-    """
+    """扫码确认成功后，渐进式将游戏置顶并在窗口中央模拟点击以进入游戏。"""
     def _log(msg: str, level: str = "info") -> None:
         if log_func:
             try:
@@ -532,36 +524,42 @@ def wait_and_click_enter_game(
     if _stopped():
         return False
 
-    _log("[*] 扫码确认完成，等待游戏过渡至「点击任意处进入」界面 (约 1.5 秒)...", "info")
+    _log("[*] 扫码确认完成，等待游戏过渡并连续进入游戏...", "info")
     time.sleep(delay_before_click)
-
-    if _stopped():
-        return False
 
     hwnd = find_bh3_hwnd()
     user32 = ctypes.windll.user32
-    if hwnd:
-        try:
-            user32.ShowWindow(hwnd, 9)  # SW_RESTORE
-            user32.SetForegroundWindow(hwnd)
-            user32.BringWindowToTop(hwnd)
-            time.sleep(0.1)
-        except Exception:
-            pass
 
-    click_x, click_y = get_cursor_pos()
-    if rect and len(rect) == 4:
-        click_x = rect[0] + rect[2] // 2
-        click_y = rect[1] + int(rect[3] * 0.6)
+    # 多波次渐进点击（在第 2s、4.5s、7s 分别置顶激活并点击中央），确保无论加载快慢均能触发展开
+    for attempt in range(1, 4):
+        if _stopped():
+            return False
 
-    _log(f"[+] 正在游戏窗口中央 ({click_x}, {click_y}) 模拟点击进入游戏...", "info")
-    click_at_pos(click_x, click_y, hwnd=hwnd)
+        if hwnd:
+            try:
+                user32.ShowWindow(hwnd, 9)  # SW_RESTORE
+                user32.SetForegroundWindow(hwnd)
+                user32.BringWindowToTop(hwnd)
+                time.sleep(0.08)
+            except Exception:
+                pass
 
-    # 间隔 0.5 秒再次执行确认点击，防止首击被动画过渡或焦点激活吞没
-    time.sleep(0.5)
-    click_at_pos(click_x, click_y, hwnd=hwnd)
+        curr_rect = find_bh3_window() or rect
+        if curr_rect and len(curr_rect) == 4:
+            click_x = curr_rect[0] + curr_rect[2] // 2
+            click_y = curr_rect[1] + int(curr_rect[3] * 0.6)
+        else:
+            click_x, click_y = get_cursor_pos()
 
-    _log("[★ 登录完成 ★] 已在游戏窗口中央完成点击进入游戏！", "success")
+        _log(f"[+] 正在游戏窗口中央 ({click_x}, {click_y}) 模拟点击进入游戏 (波次 {attempt}/3)...", "info")
+        click_at_pos(click_x, click_y, hwnd=hwnd)
+        time.sleep(0.4)
+        click_at_pos(click_x, click_y, hwnd=hwnd)
+
+        if attempt < 3:
+            time.sleep(2.0)
+
+    _log("[★ 登录完成 ★] 已完成多波次点击进入游戏，移交舰桥就绪监听器！", "success")
     return True
 
 

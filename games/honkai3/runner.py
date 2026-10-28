@@ -389,6 +389,7 @@ def run_auto_login(config: dict, log_func, is_stopped_func) -> bool:
                             popup_handler=popup_handler,
                             log_func=log_func,
                             is_stopped_func=is_stopped_func,
+                            allow_login_tap=True,
                         )
                         if not bridge_ok:
                             return False
@@ -447,6 +448,17 @@ def run_auto_login(config: dict, log_func, is_stopped_func) -> bool:
         time.sleep(0.08)
 
     log_func("[超时] 180 秒内未检测到登录二维码，请确认游戏是否正常启动并停留在登录界面！", "error")
+    try:
+        diag_folder = CURRENT_DIR.parent / "diagnostics"
+        diag_folder.mkdir(parents=True, exist_ok=True)
+        stamp = str(int(time.time()))
+        if rect:
+            diag_img = qr_scanner.capture_screen_or_window(rect)
+            if diag_img:
+                diag_img.save(diag_folder / f"login_timeout_{stamp}.png")
+                (diag_folder / f"login_timeout_{stamp}.txt").write_text("180 秒内未检测到登录二维码", encoding="utf-8")
+    except Exception:
+        pass
     return False
 
 
@@ -507,6 +519,7 @@ def wait_until_bridge_ready(
     log_func=None,
     is_stopped_func=None,
     max_wait: int = 50,
+    allow_login_tap: bool = False,
 ) -> bool:
     """
     等待资源加载并清理已识别的签到、福利及活动弹窗。
@@ -525,6 +538,8 @@ def wait_until_bridge_ready(
     )
 
     start_t = time.time()
+    last_click_t = 0.0
+    click_retried = 0
 
     while time.time() - start_t < max_wait:
         if is_stopped_func and is_stopped_func():
@@ -587,14 +602,37 @@ def wait_until_bridge_ready(
             time.sleep(1.0)
             return True
 
+        # 3. 检查是否依然停留在「点击进入」界面或电梯门前（动画延迟或首击未被游戏捕获）
+        # 前 25 秒内若未检测到弹窗且未进入舰桥，每隔 3.5 秒在游戏窗口中央补点击一次以加速进入游戏
+        if allow_login_tap and elapsed >= 3 and elapsed <= 25 and (now - last_click_t > 3.5) and click_retried < 5:
+            last_click_t = now
+            click_retried += 1
+            if log_func:
+                log_func(f"[*] 尚未到达主界面，在游戏窗口中央补点击以加速进入电梯/推进登录 (尝试 {click_retried}/5)...", "info")
+            w_left, w_top, w_w, w_h = window_rect
+            cx = w_w // 2
+            cy = int(w_h * 0.6)
+            vision.click_point(window_rect, cx, cy)
+
         if elapsed % 6 == 0 and elapsed > 0:
             if log_func:
-                log_func(f"[*] 尚未识别到舰桥或活动返回控件；继续等待且不做坐标盲点 ({elapsed}s / {max_wait}s)", "info")
+                log_func(f"[*] 尚未识别到舰桥或活动返回控件；继续等待 ({elapsed}s / {max_wait}s)", "info")
 
         time.sleep(1.0)
 
     if log_func:
         log_func("[错误] 等待舰桥主界面超时 (50s)，未能成功进入主界面或消除弹窗！为防止盲目执行日常任务，流水线终止。", "error")
+    try:
+        import cv2
+        diag_folder = Path(__file__).resolve().parents[1] / "diagnostics"
+        diag_folder.mkdir(parents=True, exist_ok=True)
+        stamp = str(int(time.time()))
+        final_screen = capture_func()
+        if final_screen is not None:
+            cv2.imwrite(str(diag_folder / f"bridge_timeout_{stamp}.png"), final_screen)
+            (diag_folder / f"bridge_timeout_{stamp}.txt").write_text("等待舰桥主界面超时 (50s)", encoding="utf-8")
+    except Exception:
+        pass
     return False
 
 
